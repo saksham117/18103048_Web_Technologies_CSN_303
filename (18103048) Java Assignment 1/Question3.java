@@ -21,7 +21,7 @@ public class Question3
     {
         int V = graph.V;
         int E = graph.E;
-        int[] dist = new int[V];
+        int dist[] = new int[V];
 
         for (int i = 0; i < V; i++)
             dist[i] = Integer.MAX_VALUE; //Initialize distances from source to all other vertices as INFINTE
@@ -51,28 +51,29 @@ public class Question3
         return false;
     }
 
-    private static void allPaths(int vertices, int source, int destination, boolean[][] g, ArrayList<Integer> v,
+    private static void Paths(int vertices, int source, int destination, boolean[][] graph, ArrayList<Integer> arr,
             int distance, boolean[] visited) {
-        v.add(source);
+    	
+        arr.add(source);
         visited[source] = true;
         if (source == destination) {
             System.out.print("\nPath: ");
-            for (Integer integer : v) {
+            for (Integer integer : arr) {
                 System.out.print(integer + 1 + " ");
             }
             System.out.println("\nDistance From Source: " + distance);
             visited[source] = false;
-            v.remove(v.size() - 1);
+            arr.remove(arr.size() - 1);
             return;
         }
 
         for (int i = 0; i < vertices; i++) {
-            if (visited[i] == false && g[source][i]) {
-                allPaths(vertices, i, destination, g, v, distance + 1, visited);
+            if (visited[i] == false && graph[source][i]) {
+                Paths(vertices, i, destination, graph, arr, distance + 1, visited);
             }
         }
         visited[source] = false;
-        v.remove(v.size() - 1);
+        arr.remove(arr.size() - 1);
     }
 
 
@@ -116,13 +117,13 @@ public class Question3
         // vetices should be numbered from 1 to n
         // not 0 to n-1
         System.out.print("Enter the source node: ");
-        int v1 = sc.nextInt();
+        int source = sc.nextInt();
         System.out.print("Enter the destination node: ");
-        int v2 = sc.nextInt();
+        int dest = sc.nextInt();
 
         System.out.println();
 
-        if(isNegativeCycle(graph, 0, v1, v2))
+        if(isNegativeCycle(graph, 0, source, dest))
             System.out.println("Negative Cycle Exists");
         else
         {   
@@ -134,7 +135,7 @@ public class Question3
                 g[e.source-1][e.destination-1] = true;
         }
             // printAllPaths(graph, v1, v2, isVisited, pathList);
-            allPaths(V, v1-1, v2-1, g, pathList, 0, visited);
+            Paths(V, source-1, dest-1, g, pathList, 0, visited);
         }
     }
 }

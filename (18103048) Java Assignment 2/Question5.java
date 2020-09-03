@@ -8,17 +8,19 @@ public class Question5{
 	{
 		// universe is elements 0 to 10;
 
+        //setA and setB are for representing sets as arrays
 		int setA [] = new int[11];
 		int setB [] = new int[11];
 
+        //setC and setD are for representing sets using Set Data Structure
 		Set<Integer> setC = new HashSet<Integer>();  
         Set<Integer> setD = new HashSet<Integer>();
 
+        // for taking input from user, till s1 and s2 don't become No
         String s1 = "Yes";
         String s2 = "Yes";
 
         // adding elements to the two sets.
-
         while(!s1.equals("No"))
         {
         	System.out.println("Enter elements in the first set: ");
@@ -57,7 +59,7 @@ public class Question5{
         Instant start1 = Instant.now();
         // performing operation using sets as arrays
 
-        // union
+        // union operation
         Vector union_a = new Vector();
 
         for(int i = 0; i < 11; i++)
@@ -86,6 +88,7 @@ public class Question5{
         		intersection_a.add(i);
         	}
         }
+
         // complement
         Vector complement_a_A = new Vector();
         Vector complement_a_B = new Vector();
@@ -108,15 +111,14 @@ public class Question5{
         System.out.println("The intersection of the two sets is " + intersection_a);
         System.out.println("The compliment of set A is " + complement_a_A);
         System.out.println("The compliment of set B is " + complement_a_B);
-
-
         System.out.println();
 
         Instant end1 = Instant.now();
 
         Duration timeElapsed1 = Duration.between(start1, end1);
 
-        // performing operation using Sets class
+
+        // performing operation using Sets Data Structure
 
         Instant start2 = Instant.now();
         //union
@@ -131,15 +133,13 @@ public class Question5{
         Set<Integer> complement_C = new HashSet<Integer>();  
         complement_C.addAll(Arrays.asList(new Integer[] {0,1,2,3,4,5,6,7,8,9,10})); 
 
-
         Set<Integer> complement_D = new HashSet<Integer>();  
         complement_D.addAll(Arrays.asList(new Integer[] {0,1,2,3,4,5,6,7,8,9,10}));
-
 
         complement_C.removeAll(setC);
         complement_D.removeAll(setD); 
 
-
+        //printing
         System.out.println("The union of the two sets is " + union);
         System.out.println("The intersection of the two sets is " + intersection);
         System.out.println("The compliment of set A is " + complement_C);
@@ -151,8 +151,8 @@ public class Question5{
         Duration timeElapsed2 = Duration.between(start2, end2);
 
 
-        System.out.println("The time taken in ths first approach is:" + timeElapsed1);
-        System.out.println("The time taken in ths second approach is:" + timeElapsed2);
+        System.out.println("The time taken in ths first approach(arrays)is:" + timeElapsed1);
+        System.out.println("The time taken in ths second approach(Sets) is:" + timeElapsed2);
 
 	}
 }

@@ -6,7 +6,6 @@ public class Question2{
 	public static void countSort(int arr [], int n)
 	{
 		int temp [] = new int[n];
-
 		int count [] = new int[21];
 
 
@@ -14,7 +13,7 @@ public class Question2{
 		for (int i = 0; i < n; i++) 
 		{
       		count[arr[i]] += 1;
-    	}
+    		}
 
     	// Storing the cummulative count in the array
     	for (int i = 1; i <= 20; i++) 

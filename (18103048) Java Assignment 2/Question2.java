@@ -7,7 +7,7 @@ public class Question2{
 	{
 		int temp [] = new int[n];
 
-		int[] count = new int[21];
+		int count [] = new int[21];
 
 
     	// Storing the count of each element
@@ -29,7 +29,7 @@ public class Question2{
       		count[arr[i]] -= 1;
     	}
 
-    	// Copy the sorted elements into original array
+    	// Copy the sorted elements back into original array
     	for (int i = 0; i < n; i++) 
     	{
       		arr[i] = temp[i];
@@ -45,26 +45,25 @@ public class Question2{
 		
 		System.out.print("Enter the size of the array: ");
 		Scanner sc = new Scanner(System.in);
-
+		// n stores the size of the input array
 		int n = sc.nextInt();
-
 		System.out.println();
 
 
 		int arr [] = new int[n];
 		System.out.println("Enter the elements into the array (from 0 to 20): ");
-
+		// entering the elements into the array
 		for(int i = 0; i < n; i++)
 		{
 			arr[i] = sc.nextInt();
 		}
-
 		System.out.println();
 
+		//calling the countsort function
 		countSort(arr,n);
 
 		System.out.println("The array after sorting is: ");
-
+		// the array after sorting is
 		for(int i = 0; i < n; i++)
 		{
 			System.out.print(arr[i] + " ");

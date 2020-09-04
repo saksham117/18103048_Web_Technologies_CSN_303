@@ -36,7 +36,11 @@ public class Question3{
 
 	// function for merging two sorted arrays (from 0 to mid and mid+1 to high)
 	public static void merge(String array[], int low, int mid, int high)
-	{
+	{	
+		// i for traversing from low to mid
+		// j for traversing from mid+1 to high
+		// k for traversing the temporary array
+		
 		int i = low;
 		int j = mid+1;
 		int k = low;
@@ -54,7 +58,8 @@ public class Question3{
 				temp[k++] = array[j++];
 			}
 		}
-
+		
+		// only one of these condition will execute
 		for(; i <= mid; i++)
 		{
 			temp[k++] = array[i];

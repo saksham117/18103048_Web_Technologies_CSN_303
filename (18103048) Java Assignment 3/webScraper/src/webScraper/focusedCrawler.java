@@ -32,7 +32,7 @@ public class focusedCrawler {
 		               .referrer("http://www.google.com").ignoreHttpErrors(true).get();
 
 			Element table = document.select("table").get(0); //select the first table.
-			Elements rows = table.select("tr");
+			Elements rows = table.select("tr"); //selecting the rows inside the table
 			
 			
 			// Using open CSV
@@ -48,15 +48,17 @@ public class focusedCrawler {
 		    String[] header = { "Title", "Profile Link",  "Department", "Designation", "Qualification", "Research Interests", "Profile Image"}; 
 		    writer.writeNext(header); 
 		  
-		    // add data to CSV
+		    // scanning the rows one by one and extracting data from every column of the table
 		    for (int i=1; i < rows.size(); i++) 
 		    {	
 		    	Element row = rows.get(i);
 		        Elements cols = row.select("td");
 		        
+			 // for handling images and hyperlinks
 		        Elements images = cols.select("img[src~=(?i)\\.(png|jpe?g|gif)]");
 		        Elements links = cols.select("a[href]");
-		
+			
+			// for adding info to the csv file 
 		        String[] data = {cols.get(1).text(),links.get(0).attr("abs:href"), cols.get(2).text(),cols.get(3).text(),cols.get(4).text(),cols.get(5).text(),cols.get(6).text(), images.get(0).attr("src")};
 			    writer.writeNext(data);
 		    }

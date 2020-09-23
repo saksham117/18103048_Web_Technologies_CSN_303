@@ -14,3 +14,5 @@ Finally the pdf_links.csv contains the links of all the pdf documents which we o
 The codes for the same are present inside the src folder.
 
 Also the output can also be viewed in the form of screenshots present in the Screenshots folder.
+
+There is also a downloads folder, which contains the psf documents that have been downloaded while crawling the websites for pdf documents

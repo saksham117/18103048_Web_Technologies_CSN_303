@@ -13,15 +13,31 @@ import org.jsoup.select.Elements;
 
 import com.opencsv.CSVWriter;
 
+// for downloading the pdf
+import java.io.FileOutputStream;
+import java.net.URL;
+import java.nio.channels.Channels;
+import java.nio.channels.ReadableByteChannel;
+
 public class pdfCrawler {
 	
 	// setting the max_depth for depth first crawling of the web sites
-	    private static final int MAX_DEPTH = 10;
+		private static final int MAX_DEPTH = 10;
 		
-	    private static int count= 1;
-	    // creating a set which contains a list of all the links that have been visited till now so that they are not visited again
+		private static int count= 1;
+		// creating a set which contains a list of all the links that have been visited till now so that they are not visited again
 	    static Set<String> pagesVisited = new HashSet<String>();
 	    static Set<String> pdfVisited = new HashSet<String>();
+	    
+	    // function for downloading the pdf
+	    private static void downloadUsingNIO(String urlStr, String file) throws IOException {
+	        URL url = new URL(urlStr);
+	        ReadableByteChannel rbc = Channels.newChannel(url.openStream());
+	        FileOutputStream fos = new FileOutputStream(file);
+	        fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+	        fos.close();
+	        rbc.close();
+	    }
 	    
 	    
 	    // this is the recursive function for crawling
@@ -45,12 +61,12 @@ public class pdfCrawler {
 				document = Jsoup.connect(url).ignoreContentType(true).userAgent("Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:25.0) Gecko/20100101 Firefox/25.0")
 			               .referrer("http://www.google.com").ignoreHttpErrors(true).get();
 
-				// extracting the links as well as the iframes(inline frames)
+				
 				Elements links = document.select("a[href]");
 				Elements iframe = document.select("iframe");
 				
 			
-			  // now making recursive calls to the crawl_next function and visiting only those pages which have not been visited once
+				 // now making recursive calls to the crawl_next function and visiting only those pages which have not been visited once
 			    for(int i = 0; i < links.size(); i++)
 			    {	
 			    	String path = links.get(i).attr("abs:href");
@@ -58,7 +74,6 @@ public class pdfCrawler {
 			    	{	
 			    		pagesVisited.add(path);
 			    		
-					// adding only those files which end with a .pdf extension
 			    		if(path.endsWith(".pdf") && !pdfVisited.contains(path))
 			    		{
 			    			pdfVisited.add(path);
@@ -70,12 +85,16 @@ public class pdfCrawler {
 			    		    // create CSVWriter object file writer object as parameter 
 			    		    CSVWriter writer2 = new CSVWriter(outputfile2); 
 			    		     
-					    // adding the data to csv
-			    		    String[] data = { Integer.toString(count++), path};
+			    		    String[] data = { Integer.toString(count), path};
 					    	writer2.writeNext(data);
 					    	
 			    		    // closing writer connection 
 			    		    writer2.close(); 
+			    		    
+			    		    // downloading the file
+			    		    downloadUsingNIO(path,Integer.toString(count) + ".pdf" );
+			    		    count++;
+			    		    
 			    		}
 			    		
 			    		if(path.length() > 18 && path.substring(0,18).equals("https://pec.ac.in/"))
@@ -94,7 +113,6 @@ public class pdfCrawler {
 			    	{	
 			    		pagesVisited.add(path);
 			    		
-					// adding only those files which end with a .pdf extension
 			    		if(path.endsWith(".pdf") && !pdfVisited.contains(path))
 			    		{
 			    			pdfVisited.add(path);
@@ -105,12 +123,16 @@ public class pdfCrawler {
 			    		  
 			    		    // create CSVWriter object file writer object as parameter 
 			    		    CSVWriter writer2 = new CSVWriter(outputfile2); 
-			    		     // adding data to the csv
-			    		    String[] data = { Integer.toString(count++), path};
+			    		     
+			    		    String[] data = { Integer.toString(count), path};
 					    	writer2.writeNext(data);
 					    	
 			    		    // closing writer connection 
 			    		    writer2.close(); 
+			    		    
+			    		    // downloading the file
+			    		    downloadUsingNIO(path,Integer.toString(count) + ".pdf" );
+			    		    count++;
 			    		}
 			    		
 			    		if(path.length() > 18 && path.substring(0,18).equals("https://pec.ac.in/"))
@@ -190,15 +212,19 @@ public class pdfCrawler {
 		    		  
 		    		    // create CSVWriter object file writer object as parameter 
 		    		    CSVWriter writer2 = new CSVWriter(outputfile2); 
-		    		     
-		    		    String[] data = { Integer.toString(count++), path};
+		    		     // adding data to the csv
+		    		    String[] data = { Integer.toString(count), path};
 				    	writer2.writeNext(data);
 				    	
 		    		    // closing writer connection 
 		    		    writer2.close(); 
+		    		    
+		    		    // downloading the file
+		    		    downloadUsingNIO(path,Integer.toString(count) + ".pdf" );
+		    		    count++;
 		    			
 		    		}
-		    		
+		    		// if the path does not contain "https://pec.ac.in/" do not visit it
 		    		if(path.length() > 18 && path.substring(0,18).equals("https://pec.ac.in/"))
 		    		{	
 		    			crawl_next(path, 0);
@@ -228,11 +254,15 @@ public class pdfCrawler {
 		    		    // create CSVWriter object file writer object as parameter 
 		    		    CSVWriter writer2 = new CSVWriter(outputfile2); 
 		    		     
-		    		    String[] data = { Integer.toString(count++), path};
+		    		    String[] data = { Integer.toString(count), path};
 				    	writer2.writeNext(data);
 				    	
 		    		    // closing writer connection 
 		    		    writer2.close(); 
+		    		    
+		    		    // downloading the file
+		    		    downloadUsingNIO(path,Integer.toString(count) + ".pdf" );
+		    		    count++;
 		    		}
 		    		
 		    		if(path.length() > 18 && path.substring(0,18).equals("https://pec.ac.in/"))

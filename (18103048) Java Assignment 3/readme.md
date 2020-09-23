@@ -15,4 +15,4 @@ The codes for the same are present inside the src folder.
 
 Also the output can also be viewed in the form of screenshots present in the Screenshots folder.
 
-There is also a downloads folder, which contains the psf documents that have been downloaded while crawling the websites for pdf documents
+There is also a downloads folder, which contains the pdf documents that have been downloaded while crawling the websites for pdf documents
